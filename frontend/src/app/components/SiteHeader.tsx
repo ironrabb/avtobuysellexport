@@ -16,7 +16,10 @@ export default function SiteHeader() {
   </>;
   return <AppBar position="sticky" color="transparent" elevation={0} className="site-header">
     <Toolbar className="site-toolbar" disableGutters>
-      <Typography component={NavLink} to="/" className="wordmark" aria-label="Avto.uz bosh sahifa">avto<span>.</span>uz</Typography>
+      <Box component={NavLink} to="/" className="brand-link" aria-label="Avto.uz bosh sahifa">
+        <img src="/avto-logo.svg" className="brand-icon" alt="" />
+        <Typography component="span" className="wordmark">avto<span>.</span>uz</Typography>
+      </Box>
       <Box className="desktop-navigation"><Stack direction="row" spacing={1} className="main-nav">{navItems}</Stack></Box>
       <Stack className="header-actions" direction="row" alignItems="center" spacing={1.5}>
         {member ? <>
