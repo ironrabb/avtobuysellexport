@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/login.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand" href="/">Avto<span>.uz</span></a>
+    <h1>Admin paneliga kirish</h1>
+    <p class="muted">Boshqaruv paneliga kirish uchun hisob ma’lumotlarini kiriting.</p>
+    <% if (error) { %><div class="alert"><%= error %></div><% } %>
+    <form action="/admin/login" method="post">
+      <label>Email<input name="email" type="email" autocomplete="username" required></label>
+      <label>Parol<input name="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit">Kirish</button>
+    </form>
+  </main>
+</body>
+</html>

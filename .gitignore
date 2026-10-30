@@ -1,0 +1,9 @@
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+*.tsbuildinfo
+.env
+src/public/images/uploads/*
+!src/public/images/uploads/.gitkeep
+npm-debug.log*
