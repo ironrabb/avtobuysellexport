@@ -19,7 +19,6 @@ export default function HomePage() {
           total={carsState.total}
           page={carsState.page}
           totalPages={carsState.totalPages}
-          pageSize={carsState.pageSize}
           loading={carsState.loading}
           error={carsState.error}
           sort={carsState.sort}

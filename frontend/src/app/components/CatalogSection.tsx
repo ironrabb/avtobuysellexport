@@ -22,7 +22,6 @@ type Props = {
   total: number;
   page: number;
   totalPages: number;
-  pageSize?: number;
   loading: boolean;
   error: string;
   sort: string;
@@ -38,7 +37,6 @@ export default function CatalogSection(props: Props) {
     total,
     page,
     totalPages,
-    pageSize = 9,
     loading,
     error,
     sort,
