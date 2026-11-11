@@ -1,0 +1,450 @@
+/* TailGrids SaaSly palette adapted to Avto.uz. */
+:root {
+  color-scheme: light;
+  --ink: #101828;
+  --muted: #6a7282;
+  --line: #e5e7eb;
+  --paper: #ffffff;
+  --green: #615fff;
+  --orange: #615fff;
+  --saasly-bg: #ffffff;
+  --saasly-surface: #ffffff;
+  --saasly-raised: #f9fafb;
+  --saasly-border: #e5e7eb;
+  --saasly-accent: #615fff;
+  --saasly-accent-strong: #4b4ae6;
+  --saasly-accent-light: #8988ff;
+}
+
+html,
+body,
+#root,
+.app-shell,
+.route-content {
+  min-height: 100%;
+  background-color: #ffffff !important;
+  color: #101828 !important;
+}
+
+.app-shell .MuiTypography-root {
+  color: #101828 !important;
+}
+.app-shell .MuiTypography-colorTextSecondary,
+.app-shell .MuiFormLabel-root,
+.app-shell .MuiInputLabel-root,
+.app-shell .MuiFormHelperText-root {
+  color: #6a7282 !important;
+}
+.app-shell .MuiTypography-colorPrimary,
+.app-shell .MuiTypography-colorSecondary {
+  color: #615fff !important;
+}
+.app-shell .MuiSvgIcon-colorAction {
+  color: #6a7282 !important;
+}
+
+.app-shell .MuiPaper-root,
+.app-shell .MuiCard-root,
+.app-shell .MuiAccordion-root {
+  border-color: #e5e7eb !important;
+  background-color: #ffffff !important;
+  color: #101828 !important;
+}
+.app-shell .MuiDivider-root {
+  border-color: #e5e7eb !important;
+}
+.app-shell .MuiAccordionSummary-root:hover {
+  background-color: #f9fafb !important;
+}
+.app-shell .MuiMenu-paper,
+.app-shell .MuiPopover-paper,
+.app-shell .MuiDialog-paper {
+  background-color: #ffffff !important;
+}
+
+.app-shell .MuiButton-root {
+  color: #344054;
+}
+.app-shell .MuiButton-containedPrimary,
+.app-shell .MuiButton-containedSecondary,
+.app-shell .MuiButton-contained.MuiButton-colorSecondary {
+  background-color: #615fff !important;
+  color: #ffffff !important;
+}
+.app-shell .MuiButton-containedPrimary:hover,
+.app-shell .MuiButton-containedSecondary:hover,
+.app-shell .MuiButton-contained.MuiButton-colorSecondary:hover {
+  background-color: #4b4ae6 !important;
+}
+.app-shell .MuiButton-outlined {
+  border-color: #d0d5dd !important;
+  color: #344054 !important;
+}
+.app-shell .MuiButton-outlined:hover,
+.app-shell .MuiButton-text:hover {
+  background-color: #f5f5ff !important;
+}
+.app-shell .MuiButton-text {
+  color: #615fff;
+}
+.app-shell .MuiIconButton-root {
+  color: #667085;
+}
+.app-shell .MuiIconButton-root:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.app-shell .MuiOutlinedInput-root,
+.app-shell .MuiInputBase-root,
+.app-shell .MuiSelect-select {
+  background-color: #ffffff !important;
+  color: #101828 !important;
+}
+.app-shell .MuiOutlinedInput-notchedOutline {
+  border-color: #d0d5dd !important;
+}
+.app-shell .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #98a2b3 !important;
+}
+.app-shell .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #615fff !important;
+}
+.app-shell .MuiInput-underline:before {
+  border-color: #d0d5dd !important;
+}
+.app-shell .MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-color: #615fff !important;
+}
+.app-shell .MuiMenuItem-root:hover,
+.app-shell .MuiMenuItem-root.Mui-selected {
+  background-color: #f5f5ff !important;
+}
+.app-shell input::placeholder,
+.app-shell textarea::placeholder {
+  color: #98a2b3 !important;
+  opacity: 1;
+}
+.app-shell .MuiSkeleton-root {
+  background-color: #eaecf0 !important;
+}
+
+.app-shell .announcement {
+  background-color: #f9fafb !important;
+  color: #6a7282 !important;
+}
+.app-shell .announcement svg {
+  color: #615fff !important;
+}
+.app-shell .site-header.MuiAppBar-root {
+  border-color: #e5e7eb !important;
+  background: #ffffffed !important;
+  color: #101828 !important;
+}
+.app-shell .site-header .wordmark,
+.app-shell .footer .wordmark {
+  color: #101828 !important;
+}
+.app-shell .site-header .wordmark span,
+.app-shell .footer .wordmark span {
+  color: #615fff !important;
+}
+.app-shell .site-header .main-nav .MuiButton-root,
+.app-shell .site-header .main-nav .MuiButton-root.active,
+.app-shell .site-header .main-nav .MuiButton-root:hover {
+  color: #344054 !important;
+}
+.app-shell .site-header .header-actions .MuiButton-contained {
+  background: #615fff !important;
+  color: #fff !important;
+}
+.app-shell .site-header .header-actions .MuiButton-contained:hover {
+  background: #4b4ae6 !important;
+}
+.app-shell .language-select {
+  border-color: #e5e7eb !important;
+  background: #fff !important;
+  color: #344054 !important;
+}
+
+.app-shell .hero {
+  background: linear-gradient(180deg, #f5f5ff 0%, #ffffff 84%) !important;
+}
+.app-shell .hero h1,
+.app-shell .catalog .section-heading h2,
+.app-shell .trust-intro h2,
+.app-shell .page-intro h1,
+.app-shell .chosen-product-page .detail-copy h1,
+.app-shell .chosen-product-page .detail-copy h2 {
+  color: #101828 !important;
+}
+.app-shell .hero h1 em,
+.app-shell .trust-intro h2 em {
+  color: #615fff !important;
+}
+.app-shell .eyebrow,
+.app-shell .section-subtitle,
+.app-shell .hero-copy > p,
+.app-shell .trust-intro p {
+  color: #6a7282 !important;
+}
+.app-shell .eyebrow-line,
+.app-shell .hero-link svg,
+.app-shell .orange-dot {
+  color: #615fff !important;
+  background-color: #615fff !important;
+}
+.app-shell .hero-link,
+.app-shell .catalog .all-link,
+.app-shell .inline-link {
+  color: #615fff !important;
+  border-color: #d0d5dd !important;
+}
+.app-shell .hero-image-caption,
+.app-shell .hero-image-caption span:first-child {
+  color: #ffffff !important;
+}
+
+.app-shell .catalog-toolbar.MuiPaper-root {
+  border-color: #e5e7eb !important;
+  background: transparent !important;
+}
+.app-shell .catalog .result-count,
+.app-shell .catalog .card-meta .MuiTypography-root,
+.app-shell .catalog .car-specs,
+.app-shell .catalog .card-footer h3 span {
+  color: #6a7282 !important;
+}
+.app-shell .catalog .car-card.MuiCard-root {
+  border-color: #e5e7eb !important;
+  background: #ffffff !important;
+}
+.app-shell .catalog .car-image {
+  background-color: #f3f4f6 !important;
+}
+.app-shell .catalog .image-label.MuiChip-root {
+  background: #ffffffed !important;
+  color: #344054 !important;
+}
+.app-shell .catalog .favorite.MuiIconButton-root {
+  background: #ffffffed !important;
+  color: #667085 !important;
+}
+.app-shell .catalog .favorite.saved,
+.app-shell .catalog .car-specs svg,
+.app-shell .catalog .car-title svg,
+.app-shell .catalog .card-footer .MuiIconButton-root {
+  color: #615fff !important;
+}
+.app-shell .catalog .car-title {
+  border-color: #e5e7eb !important;
+  color: #101828 !important;
+}
+.app-shell .catalog .card-footer h3 {
+  color: #101828 !important;
+}
+.app-shell .catalog .load-more {
+  border-color: #d0d5dd !important;
+  color: #615fff !important;
+}
+.app-shell .catalog .live-dot {
+  background: #615fff !important;
+  box-shadow: 0 0 0 3px #615fff22 !important;
+}
+
+.app-shell .sell-banner.MuiBox-root,
+.app-shell .auth-editorial {
+  background: #f5f5ff !important;
+  color: #101828 !important;
+}
+.app-shell .sell-banner .eyebrow,
+.app-shell .sell-banner p,
+.app-shell .auth-editorial-copy {
+  color: #6a7282 !important;
+}
+.app-shell .sell-banner h2,
+.app-shell .auth-editorial-title,
+.app-shell .auth-editorial-brand {
+  color: #101828 !important;
+}
+.app-shell .sell-banner h2 em,
+.app-shell .auth-editorial-title em,
+.app-shell .auth-editorial-brand span {
+  color: #615fff !important;
+}
+.app-shell .sell-banner .MuiButton-contained,
+.app-shell .listing-form .MuiButton-contained,
+.app-shell .premium-auth .MuiButton-contained {
+  background: #615fff !important;
+  color: #fff !important;
+}
+.app-shell .sell-banner .MuiButton-contained:hover,
+.app-shell .listing-form .MuiButton-contained:hover,
+.app-shell .premium-auth .MuiButton-contained:hover {
+  background: #4b4ae6 !important;
+}
+.app-shell .footer {
+  border-color: #e5e7eb !important;
+  background: #f9fafb !important;
+  color: #6a7282 !important;
+}
+.app-shell .footer .MuiTypography-root,
+.app-shell .footer .MuiLink-root {
+  color: #6a7282 !important;
+}
+.app-shell .trust-points > div,
+.app-shell .trust-points > div:first-child,
+.app-shell .page-intro,
+.app-shell .seller-listings-heading,
+.app-shell .account-details {
+  border-color: #e5e7eb !important;
+}
+.app-shell .trust-number,
+.app-shell .trust-points > div > svg {
+  color: #615fff !important;
+}
+
+.app-shell .account-overview,
+.app-shell .listing-row,
+.app-shell .listing-edit-form,
+.app-shell .listing-form,
+.app-shell .detail-seller-card,
+.app-shell .premium-auth .auth-page-card {
+  border-color: #e5e7eb !important;
+  background: #ffffff !important;
+  color: #101828 !important;
+}
+.app-shell .account-details,
+.app-shell .listing-row-summary .listing-row-price,
+.app-shell .sell-page-sidebar .MuiTypography-root,
+.app-shell .listing-form .MuiTypography-caption {
+  color: #6a7282 !important;
+}
+.app-shell .account-identity .MuiAvatar-root,
+.app-shell .detail-seller-card .avatar,
+.app-shell .account-menu .avatar,
+.app-shell .avatar {
+  background: #eeedff !important;
+  color: #615fff !important;
+}
+.app-shell .listing-status.MuiChip-root,
+.app-shell .owner-label.MuiChip-root {
+  border-color: #c7c6ff !important;
+  background: #eeedff !important;
+  color: #4b4ae6 !important;
+}
+.app-shell .listing-row-actions .MuiButton-colorError {
+  border-color: #fecdca !important;
+  color: #b42318 !important;
+}
+.app-shell .listing-form .MuiTextField-root .MuiOutlinedInput-root,
+.app-shell .premium-auth .MuiTextField-root .MuiOutlinedInput-root {
+  background: #ffffff !important;
+}
+.app-shell .listing-form > .MuiStack-root > .MuiTypography-h3 {
+  border-color: #e5e7eb !important;
+  color: #101828 !important;
+}
+.app-shell .image-preview,
+.app-shell .existing-image-row img {
+  border-color: #e5e7eb !important;
+  background: #f3f4f6 !important;
+}
+.app-shell .image-preview .MuiIconButton-root {
+  background: #ffffff !important;
+  color: #344054 !important;
+}
+
+.app-shell .chosen-product-page {
+  --detail-ink: #101828;
+  --detail-muted: #6a7282;
+  --detail-line: #e5e7eb;
+  --detail-paper: #ffffff;
+  --detail-accent: #615fff;
+  --detail-accent-hover: #4b4ae6;
+}
+.app-shell .chosen-product-page .detail-page-card.MuiCard-root {
+  border-color: #e5e7eb !important;
+  background: #ffffff !important;
+}
+.app-shell .chosen-product-page .detail-gallery {
+  background: #f9fafb !important;
+}
+.app-shell .chosen-product-page .detail-image-stage,
+.app-shell .chosen-product-page .detail-image-thumbnail {
+  border-color: #e5e7eb !important;
+  background: #f3f4f6 !important;
+}
+.app-shell .chosen-product-page .detail-page-image {
+  mix-blend-mode: multiply !important;
+}
+.app-shell .chosen-product-page .detail-image-arrow {
+  border-color: #d0d5dd !important;
+  background: #ffffff !important;
+  color: #344054 !important;
+}
+.app-shell .chosen-product-page .detail-image-counter {
+  background: #101828 !important;
+}
+.app-shell .chosen-product-page .detail-verified-chip {
+  background: #eeedff !important;
+  color: #4b4ae6 !important;
+}
+.app-shell .chosen-product-page .detail-copy .MuiChip-outlined {
+  border-color: #d0d5dd !important;
+  color: #344054 !important;
+}
+.app-shell .detail-seller-card.MuiCard-root {
+  background: #f9fafb !important;
+}
+.app-shell .detail-seller-card .MuiButton-root {
+  background: #615fff !important;
+  color: #ffffff !important;
+}
+
+.app-shell .premium-auth .MuiTypography-overline {
+  color: #615fff !important;
+}
+.app-shell .premium-auth .auth-page-card h1 {
+  color: #101828 !important;
+}
+.app-shell .MuiAlert-standardError {
+  border-color: #fecdca !important;
+  background: #fef3f2 !important;
+  color: #b42318 !important;
+}
+.app-shell .MuiAlert-standardSuccess {
+  border-color: #abefc6 !important;
+  background: #ecfdf3 !important;
+  color: #067647 !important;
+}
+.app-shell .MuiAlert-standardInfo {
+  border-color: #b2ddff !important;
+  background: #eff8ff !important;
+  color: #175cd3 !important;
+}
+.app-shell .MuiAlert-standardWarning {
+  border-color: #fedf89 !important;
+  background: #fffaeb !important;
+  color: #b54708 !important;
+}
+.app-shell .MuiChip-colorSuccess {
+  background: #ecfdf3 !important;
+  color: #067647 !important;
+}
+.app-shell .MuiChip-colorError {
+  background: #fef3f2 !important;
+  color: #b42318 !important;
+}
+.app-shell :focus-visible {
+  outline-color: #615fff !important;
+}
+.app-shell ::selection {
+  background: #e0e7ff !important;
+  color: #312e81 !important;
+}
+
+@media (max-width: 760px) {
+  .app-shell .site-header.MuiAppBar-root {
+    background: #ffffff !important;
+  }
+}

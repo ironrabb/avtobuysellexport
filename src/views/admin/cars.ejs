@@ -1,23 +1,27 @@
 <!doctype html>
-<html lang="uz">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/car-manage.css">
-</head>
+<html lang="<%= language %>">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/public/images/favicon.svg"><title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/car-manage.css"></head>
 <body>
-  <header class="topbar"><a class="brand" href="/admin/cars">Avto<span>.uz</span> <small>Admin</small></a><form method="post" action="/admin/logout"><button class="logout" type="submit">Chiqish</button></form></header>
+  <header class="topbar"><a class="brand" href="/admin/cars?lang=<%= language %>"><img class="brand-logo" src="/public/images/avto-logo.svg" alt="AVTO"> <small><%= t.panel %></small></a><nav class="admin-nav"><a class="selected" href="/admin/cars?lang=<%= language %>"><%= t.cars %></a><a href="/admin/users?lang=<%= language %>"><%= t.users %></a></nav><div class="topbar-actions"><nav class="language-picker" aria-label="<%= t.language %>"><% ['uz','ru','en','ko'].forEach((code) => { %><a class="<%= language === code ? 'selected' : '' %>" href="/admin/cars?lang=<%= code %>"><%= code.toUpperCase() %></a><% }); %></nav><form method="post" action="/admin/logout"><input type="hidden" name="lang" value="<%= language %>"><button class="logout" type="submit"><%= t.logout %></button></form></div></header>
   <main class="container">
-    <div class="page-heading"><div><p class="eyebrow">BOSHQARUV PANELI</p><h1>Ko‘rib chiqilayotgan e’lonlar</h1></div><span class="count"><%= cars.length %> ta</span></div>
-    <% if (!cars.length) { %><section class="empty-state"><h2>Yangi e’lon yo‘q</h2><p>Tekshirish uchun yuborilgan avtomobillar shu yerda ko‘rinadi.</p></section><% } %>
+    <div class="page-heading"><div><p class="eyebrow"><%= t.panel %></p><h1><%= t.manageCars %></h1></div><span class="count"><%= total %></span></div>
+    <% if (!cars.length) { %><section class="empty-state"><h2><%= t.noCars %></h2></section><% } %>
     <section class="car-list">
-      <% cars.forEach((car) => { %>
+      <% cars.forEach((car) => { const statusLabel = ({ ACTIVE: t.active, PAUSED: t.paused, BLOCKED: t.blocked, REJECTED: t.rejected, SOLD: t.sold, PENDING: t.pendingStatus, ARCHIVED: t.paused })[car.status] || car.status; %>
         <article class="car-card">
-          <div class="car-image"><% if (car.images && car.images.length) { %><img src="/public<%= car.images[0] %>" alt="<%= car.title %>"><% } else { %><span>Rasm mavjud emas</span><% } %></div>
-          <div class="car-info"><p class="eyebrow"><%= car.make %> · <%= car.year %></p><h2><%= car.title %></h2><p><%= car.region %> · <%= Number(car.mileage).toLocaleString('uz-UZ') %> km</p><strong><%= Number(car.price).toLocaleString('uz-UZ') %> so‘m</strong><% if (car.sellerId) { %><p class="seller">Sotuvchi: <%= car.sellerId.name %> (<%= car.sellerId.phone %>)</p><% } %></div>
-          <div class="actions"><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="action" value="approve"><button class="approve" type="submit">Tasdiqlash</button></form><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="action" value="reject"><button class="reject" type="submit">Rad etish</button></form></div>
+          <div class="car-image"><% if (car.images && car.images.length) { %><img src="/public<%= car.images[0] %>" alt="<%= car.title %>"><% } else { %><span><%= t.noImage %></span><% } %></div>
+          <div class="car-info"><p class="eyebrow"><%= car.make %> · <%= car.year %> · <span class="status status-<%= String(car.status).toLowerCase() %>"><%= statusLabel %></span></p><h2><%= car.title %></h2><p><%= car.region %> · <%= Number(car.mileage).toLocaleString(language === 'uz' ? 'uz-UZ' : language === 'ru' ? 'ru-RU' : language === 'ko' ? 'ko-KR' : 'en-US') %> km</p><strong><%= Number(car.price).toLocaleString(language === 'uz' ? 'uz-UZ' : language === 'ru' ? 'ru-RU' : language === 'ko' ? 'ko-KR' : 'en-US') %></strong><% if (car.sellerId) { %><p class="seller"><%= t.seller %>: <%= car.sellerId.name %> · <%= car.sellerId.phone %></p><% } %></div>
+          <div class="actions">
+            <% if (car.status !== 'ACTIVE') { %><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="activate"><button class="approve" type="submit"><%= car.status === 'PENDING' ? t.approve : t.activate %></button></form><% } %>
+            <% if (car.status !== 'PAUSED') { %><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="pause"><button class="pause" type="submit"><%= t.pause %></button></form><% } %>
+            <% if (car.status !== 'BLOCKED') { %><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="block"><button class="reject" type="submit"><%= t.block %></button></form><% } %>
+            <% if (car.status === 'PENDING') { %><form method="post" action="/admin/cars/<%= car._id %>/moderate"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="reject"><button class="reject" type="submit"><%= t.reject %></button></form><% } %>
+            <form method="post" action="/admin/cars/<%= car._id %>/delete" onsubmit="return confirm('<%= t.confirmDelete %>')"><input type="hidden" name="lang" value="<%= language %>"><button class="delete" type="submit"><%= t.delete %></button></form>
+          </div>
         </article>
       <% }); %>
     </section>
+    <% if (pages > 1) { %><nav class="pagination" aria-label="Pagination"><% if (page > 1) { %><a href="/admin/cars?lang=<%= language %>&page=<%= page - 1 %>">←</a><% } %><span><%= page %> / <%= pages %></span><% if (page < pages) { %><a href="/admin/cars?lang=<%= language %>&page=<%= page + 1 %>">→</a><% } %></nav><% } %>
   </main>
 </body>
 </html>

@@ -1,1 +1,25 @@
-.signup-page{display:grid;place-items:center;padding:24px}.signup-card{width:min(520px,100%);padding:36px;background:#fff;border-radius:14px;border:1px solid #e7ebef}.signup-card form{display:grid;gap:16px}.signup-card label{display:grid;gap:7px}.signup-card input{padding:12px;border:1px solid #d9e0e6;border-radius:8px}
+.signup-page {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.signup-card {
+  width: min(520px, 100%);
+  padding: 36px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e7ebef;
+}
+.signup-card form {
+  display: grid;
+  gap: 16px;
+}
+.signup-card label {
+  display: grid;
+  gap: 7px;
+}
+.signup-card input {
+  padding: 12px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+}

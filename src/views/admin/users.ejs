@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="<%= language %>">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/public/images/favicon.svg"><title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/car-manage.css"></head>
+<body>
+  <header class="topbar"><a class="brand" href="/admin/cars?lang=<%= language %>"><img class="brand-logo" src="/public/images/avto-logo.svg" alt="AVTO"> <small><%= t.panel %></small></a><nav class="admin-nav"><a href="/admin/cars?lang=<%= language %>"><%= t.cars %></a><a class="selected" href="/admin/users?lang=<%= language %>"><%= t.users %></a></nav><div class="topbar-actions"><nav class="language-picker" aria-label="<%= t.language %>"><% ['uz','ru','en','ko'].forEach((code) => { %><a class="<%= language === code ? 'selected' : '' %>" href="/admin/users?lang=<%= code %>"><%= code.toUpperCase() %></a><% }); %></nav><form method="post" action="/admin/logout"><input type="hidden" name="lang" value="<%= language %>"><button class="logout" type="submit"><%= t.logout %></button></form></div></header>
+  <main class="container">
+    <div class="page-heading"><div><p class="eyebrow"><%= t.panel %></p><h1><%= t.manageUsers %></h1></div><span class="count"><%= total %></span></div>
+    <% if (!users.length) { %><section class="empty-state"><h2><%= t.noUsers %></h2></section><% } %>
+    <section class="user-list">
+      <% users.forEach((user) => { const statusLabel = ({ ACTIVE: t.active, PAUSED: t.paused, BLOCKED: t.blocked, PENDING: t.pendingStatus })[user.status] || user.status; const isAdmin = user.type === 'ADMIN'; const isSelf = user.id === currentMemberId; %>
+        <article class="user-card">
+          <div class="user-avatar"><%= String(user.name || '?').slice(0, 1).toUpperCase() %></div>
+          <div class="user-info"><p class="eyebrow"><%= isAdmin ? t.admin : user.type === 'SELLER' ? t.seller : t.buyer %> · <span class="status status-<%= String(user.status).toLowerCase() %>"><%= statusLabel %></span></p><h2><%= user.name %></h2><p><%= user.email %> · <%= user.phone %></p><small><%= t.joined %>: <%= new Date(user.createdAt).toLocaleDateString(language === 'uz' ? 'uz-UZ' : language === 'ru' ? 'ru-RU' : language === 'ko' ? 'ko-KR' : 'en-US') %></small></div>
+          <% if (!isAdmin && !isSelf) { %><div class="actions user-actions">
+            <% if (user.status !== 'ACTIVE') { %><form method="post" action="/admin/users/<%= user._id %>/status"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="activate"><button class="approve" type="submit"><%= t.activate %></button></form><% } %>
+            <% if (user.status !== 'PAUSED') { %><form method="post" action="/admin/users/<%= user._id %>/status"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="pause"><button class="pause" type="submit"><%= t.pause %></button></form><% } %>
+            <% if (user.status !== 'BLOCKED') { %><form method="post" action="/admin/users/<%= user._id %>/status"><input type="hidden" name="lang" value="<%= language %>"><input type="hidden" name="action" value="block"><button class="reject" type="submit"><%= t.block %></button></form><% } %>
+            <form method="post" action="/admin/users/<%= user._id %>/delete" onsubmit="return confirm('<%= confirmDeleteUser %>')"><input type="hidden" name="lang" value="<%= language %>"><button class="delete" type="submit"><%= t.delete %></button></form>
+          </div><% } %>
+        </article>
+      <% }); %>
+    </section>
+    <% if (pages > 1) { %><nav class="pagination" aria-label="Pagination"><% if (page > 1) { %><a href="/admin/users?lang=<%= language %>&page=<%= page - 1 %>">←</a><% } %><span><%= page %> / <%= pages %></span><% if (page < pages) { %><a href="/admin/users?lang=<%= language %>&page=<%= page + 1 %>">→</a><% } %></nav><% } %>
+  </main>
+</body>
+</html>

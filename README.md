@@ -43,16 +43,26 @@ Frontend marshrutlari: `/`, `/cars`, `/cars/:id`, `/sell`, `/account`, `/login`,
 
 | Method | Path | Vazifa |
 | --- | --- | --- |
-| POST | `/api/members/register` | Hisob yaratish (`type` ixtiyoriy: `BUYER` yoki `SELLER`; default `BUYER`) |
+| POST | `/api/members/signup` | Hisob yaratish (`type` ixtiyoriy: `BUYER` yoki `SELLER`; default `BUYER`) |
 | POST | `/api/members/login` | Kirish, JWT va MongoDB session yozuvi |
 | POST | `/api/members/logout` | Joriy sessionni bekor qilish |
 | GET | `/api/members/me` | Joriy foydalanuvchi profili |
+| POST | `/api/members/me/avatar` | Profil rasmini yuklash (`avatar` maydoni) |
 | GET | `/api/cars` | Faol e’lonlar; `q`, `page`, `limit`, `make`, `model`, `region`, `fuel`, `transmission`, `minPrice`, `maxPrice` filtrlari |
 | GET | `/api/cars/:id` | E’lon tafsiloti |
 | POST | `/api/cars` | Sotuvchi hisobidan avtomobil e’loni va rasmlarini yuborish (`images` multipart maydoni) |
+| GET | `/api/cars/mine` | Joriy sotuvchining e’lonlari |
+| PATCH | `/api/cars/:id` | O‘z e’lonini yangilash; o‘zgartirish moderatsiyaga qaytariladi |
+| DELETE | `/api/cars/:id` | O‘z e’lonini o‘chirish |
 | GET | `/admin/login` | Admin kirish sahifasi |
-| GET | `/admin/cars` | Tasdiq kutayotgan e’lonlar |
-| POST | `/admin/cars/:id/moderate` | `action=approve` yoki `action=reject` |
+| GET | `/admin/cars` | E’lonlar ro‘yxati va moderatsiya |
+| POST | `/admin/cars/:id/moderate` | `action=approve`, `reject`, `activate`, `pause` yoki `block` |
+| POST | `/admin/cars/:id/delete` | E’lonni butunlay o‘chirish |
+| GET | `/admin/users` | Foydalanuvchilar ro‘yxati va status boshqaruvi |
+| POST | `/admin/users/:id/status` | `action=activate`, `pause` yoki `block` |
+| POST | `/admin/users/:id/delete` | User va uning e’lonlarini o‘chirish |
+
+Admin panelida e’lonlar hamda foydalanuvchilarni boshqarish mumkin. Statusni `pause` yoki `block` qilish foydalanuvchining mavjud sessiyalarini bekor qiladi; admin akkauntlarini bu paneldan o‘zgartirib bo‘lmaydi. Admin sahifasidagi `UZ`, `RU`, `EN`, `KO` tugmalari panel tilini tanlaydi. Foydalanuvchi saytida yuqori paneldagi til tanlagich tanlovni brauzerda saqlaydi.
 
 `/api` endpointlari JSON xatolarida `Accept-Language` headeridagi `uz`, `ru`, `en` yoki `ko` tilini ishlatadi. E’lonlar moderatsiyadan keyingina ommaga ko‘rinadi.
 

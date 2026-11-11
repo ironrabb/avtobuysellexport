@@ -1,19 +1,18 @@
 <!doctype html>
-<html lang="uz">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/login.css">
-</head>
+<html lang="<%= language %>">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/public/images/favicon.svg"><title><%= title %></title><link rel="stylesheet" href="/public/css/main.css"><link rel="stylesheet" href="/public/css/login.css"></head>
 <body class="auth-page">
   <main class="auth-card">
-    <a class="brand" href="/">Avto<span>.uz</span></a>
-    <h1>Admin paneliga kirish</h1>
-    <p class="muted">Boshqaruv paneliga kirish uchun hisob ma’lumotlarini kiriting.</p>
+    <nav class="language-picker login-language" aria-label="<%= t.language %>"><% ['uz','ru','en','ko'].forEach((code) => { %><a class="<%= language === code ? 'selected' : '' %>" href="/admin/login?lang=<%= code %>"><%= code.toUpperCase() %></a><% }); %></nav>
+    <a class="brand" href="/"><img class="brand-logo" src="/public/images/avto-logo.svg" alt="AVTO"></a>
+    <h1><%= t.login %></h1>
+    <p class="muted"><%= t.loginHelp %></p>
     <% if (error) { %><div class="alert"><%= error %></div><% } %>
     <form action="/admin/login" method="post">
-      <label>Email<input name="email" type="email" autocomplete="username" required></label>
-      <label>Parol<input name="password" type="password" autocomplete="current-password" required></label>
-      <button type="submit">Kirish</button>
+      <input type="hidden" name="lang" value="<%= language %>">
+      <label><%= t.email %><input name="email" type="email" autocomplete="username" required></label>
+      <label><%= t.password %><input name="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit"><%= t.signIn %></button>
     </form>
   </main>
 </body>

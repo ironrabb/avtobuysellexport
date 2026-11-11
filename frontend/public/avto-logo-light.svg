@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 84" role="img" aria-labelledby="title">
+  <title id="title">AVTO</title>
+  <g>
+    <path fill="#fff" d="M43 4 91 72 71 74 43 35 19 75 0 79Z"/>
+    <path fill="#c5c9ce" d="m18 74 24-7-12 16H2Z"/>
+    <path fill="#c5c9ce" d="m63 68 19-3 16 18H72Z"/>
+    <path fill="#fff" d="m23 59 70-11-14 15-64 16Z"/>
+    <path fill="#0755ed" d="m35 61 75-12-41 23-50 7Z"/>
+    <path fill="#fff" d="m19 79 49-7-10 8H17Z"/>
+  </g>
+  <text x="112" y="65" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="51" font-weight="700" letter-spacing="1.5">AVTO</text>
+</svg>
