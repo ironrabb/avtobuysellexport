@@ -6,6 +6,7 @@ import App from "./App";
 import theme from "./app/components/MaterialTheme";
 import { SessionProvider } from "./app/context/SessionContext";
 import { LocaleProvider } from "./app/context/LocaleContext";
+import { FavoritesProvider } from "./app/context/FavoritesContext";
 import "./styles.css";
 import "./app/components/MaterialTheme/styled.css";
 import "./modern.css";
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <LocaleProvider>
           <SessionProvider>
-            <App />
+            <FavoritesProvider>
+              <App />
+            </FavoritesProvider>
           </SessionProvider>
         </LocaleProvider>
       </BrowserRouter>

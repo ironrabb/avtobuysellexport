@@ -7,3 +7,7 @@ frontend/dist/
 src/public/images/uploads/*
 !src/public/images/uploads/.gitkeep
 npm-debug.log*
+.vscode/
+.agents/
+.21st/
+

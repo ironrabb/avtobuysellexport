@@ -1,4 +1,4 @@
-﻿import {
+import {
   ArrowUpward,
   Favorite,
   FavoriteBorder,
@@ -16,10 +16,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Car } from "../../types";
 import { carPhoto, money, regionName } from "../../types";
 import { useLocale } from "../context/LocaleContext";
 import { useSession } from "../context/SessionContext";
+import { useFavorites } from "../context/FavoritesContext";
 
 type Props = { car: Car; index: number; onOpen: (car: Car) => void };
 const fuelLabels = {
@@ -58,13 +60,37 @@ const fuelLabels = {
 } as const;
 
 export default function CarCard({ car, index, onOpen }: Props) {
-  const [saved, setSaved] = useState(false);
   const { language, t } = useLocale();
   const { member } = useSession();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+
+  const saved = isFavorite(car._id);
   const isOwner = Boolean(
     member?.id && car.sellerId?._id && member.id === car.sellerId._id,
   );
   const openCar = () => onOpen(car);
+
+  const handleFavoriteClick = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (!member) {
+      if (window.confirm(t("loginToFavorite"))) {
+        navigate("/auth");
+      }
+      return;
+    }
+    if (busy) return;
+    setBusy(true);
+    try {
+      await toggleFavorite(car._id);
+    } catch {
+      // Ignored, handled by rollback
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <Card className="car-card" style={{ animationDelay: `${index * 55}ms` }}>
       <Box
@@ -88,11 +114,9 @@ export default function CarCard({ car, index, onOpen }: Props) {
         )}
         <IconButton
           className={saved ? "favorite saved" : "favorite"}
-          onClick={(event) => {
-            event.stopPropagation();
-            setSaved(!saved);
-          }}
+          onClick={handleFavoriteClick}
           aria-label={t("save")}
+          disabled={busy}
         >
           {saved ? <Favorite /> : <FavoriteBorder />}
         </IconButton>

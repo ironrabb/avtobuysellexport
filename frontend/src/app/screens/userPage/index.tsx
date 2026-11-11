@@ -1,4 +1,5 @@
-﻿import {
+import {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -19,21 +20,29 @@ import {
   MenuItem,
   Paper,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
 import {
   AccountCircle,
   Close,
+  DirectionsCar,
   Email,
+  Favorite,
+  FavoriteBorder,
   Phone,
   PhotoCamera,
 } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../../lib/api";
 import { fuels, makes } from "../../../constants";
 import { carPhoto, regions, regionName, type Car } from "../../../types";
 import { useSession } from "../../context/SessionContext";
 import { useLocale } from "../../context/LocaleContext";
+import { useFavorites } from "../../context/FavoritesContext";
+import CarCard from "../../components/CarCard";
 
 type Profile = {
   id: string;
@@ -425,6 +434,110 @@ function SellerListings() {
   );
 }
 
+function UserFavorites() {
+  const { t } = useLocale();
+  const navigate = useNavigate();
+  const { favoriteIds } = useFavorites();
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const fetchFavorites = useCallback(() => {
+    let active = true;
+    setLoading(true);
+    api<Car[]>("/api/cars/favorites/my")
+      .then((data) => {
+        if (active) setCars(data ?? []);
+      })
+      .catch((cause: unknown) => {
+        if (active)
+          setError(cause instanceof Error ? cause.message : t("carsLoadError"));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [t]);
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [fetchFavorites, favoriteIds.length]);
+
+  return (
+    <Box className="user-favorites" sx={{ mt: 2 }}>
+      <Box className="seller-listings-heading" sx={{ mb: 3 }}>
+        <Typography variant="overline" color="secondary.main">
+          AVTO.UZ
+        </Typography>
+        <Typography variant="h2" fontSize={25}>
+          {t("myFavorites")} ({cars.length})
+        </Typography>
+      </Box>
+
+      {loading && (
+        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
+          <CircularProgress />
+        </Box>
+      )}
+
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      {!loading && !error && cars.length === 0 && (
+        <Paper
+          variant="outlined"
+          sx={{
+            textAlign: "center",
+            py: 6,
+            px: 3,
+            borderRadius: 3,
+            bgcolor: "background.paper",
+          }}
+        >
+          <FavoriteBorder
+            sx={{
+              fontSize: 56,
+              color: "text.secondary",
+              mb: 1.5,
+              opacity: 0.7,
+            }}
+          />
+          <Typography variant="h3" fontSize={20} sx={{ mb: 1 }}>
+            {t("noFavorites")}
+          </Typography>
+          <Typography
+            color="text.secondary"
+            sx={{ maxWidth: 460, mx: "auto", mb: 3 }}
+          >
+            {t("noFavoritesDesc")}
+          </Typography>
+          <Button component={Link} to="/cars" variant="contained">
+            {t("browse")}
+          </Button>
+        </Paper>
+      )}
+
+      {!loading && cars.length > 0 && (
+        <Box className="car-grid">
+          {cars.map((car, index) => (
+            <CarCard
+              key={car._id}
+              car={car}
+              index={index}
+              onOpen={(c) => navigate(`/cars/${c._id}`)}
+            />
+          ))}
+        </Box>
+      )}
+    </Box>
+  );
+}
+
 export default function UserPage() {
   const { member, updateMember } = useSession();
   const { t } = useLocale();
@@ -434,6 +547,7 @@ export default function UserPage() {
   const [loading, setLoading] = useState(true);
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarBusy, setAvatarBusy] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   useEffect(
     () => () => {
       if (avatarPreview) URL.revokeObjectURL(avatarPreview);
@@ -596,8 +710,37 @@ export default function UserPage() {
           </CardContent>
         </Card>
       )}
-      {profile && (profile.type === "SELLER" || profile.type === "ADMIN") && (
-        <SellerListings />
+      {profile && (
+        <Box sx={{ mt: 5 }}>
+          {profile.type === "SELLER" || profile.type === "ADMIN" ? (
+            <>
+              <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}>
+                <Tabs
+                  value={activeTab}
+                  onChange={(_, val: number) => setActiveTab(val)}
+                  textColor="secondary"
+                  indicatorColor="secondary"
+                  aria-label="Profile tabs"
+                >
+                  <Tab
+                    icon={<DirectionsCar />}
+                    iconPosition="start"
+                    label={t("myListingsTab")}
+                  />
+                  <Tab
+                    icon={<Favorite />}
+                    iconPosition="start"
+                    label={t("favoritesTab")}
+                  />
+                </Tabs>
+              </Box>
+              {activeTab === 0 && <SellerListings />}
+              {activeTab === 1 && <UserFavorites />}
+            </>
+          ) : (
+            <UserFavorites />
+          )}
+        </Box>
       )}
       {!member && !loading && (
         <Alert severity="info">{t("profileLogin")}</Alert>

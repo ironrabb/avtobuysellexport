@@ -4,10 +4,10 @@
   --ink: #101828;
   --muted: #6a7282;
   --line: #e5e7eb;
-  --paper: #ffffff;
+  --paper: #f2f6fb;
   --green: #615fff;
   --orange: #615fff;
-  --saasly-bg: #ffffff;
+  --saasly-bg: #f2f6fb;
   --saasly-surface: #ffffff;
   --saasly-raised: #f9fafb;
   --saasly-border: #e5e7eb;
@@ -16,14 +16,30 @@
   --saasly-accent-light: #8988ff;
 }
 
+:root {
+  background-color: #f2f6fb;
+  background-image:
+    radial-gradient(ellipse 70% 46% at 2% 0%, rgba(77, 210, 255, 0.13) 0%, transparent 72%),
+    radial-gradient(ellipse 56% 44% at 100% 4%, rgba(91, 110, 245, 0.10) 0%, transparent 73%),
+    radial-gradient(ellipse 58% 38% at 52% 100%, rgba(53, 230, 192, 0.07) 0%, transparent 74%);
+  background-blend-mode: soft-light, screen, normal;
+  background-attachment: fixed;
+}
+
 html,
 body,
 #root,
 .app-shell,
 .route-content {
   min-height: 100%;
-  background-color: #ffffff !important;
   color: #101828 !important;
+}
+
+body,
+#root,
+.app-shell,
+.route-content {
+  background-color: transparent !important;
 }
 
 .app-shell .MuiTypography-root {

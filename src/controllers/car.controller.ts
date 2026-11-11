@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { CarService } from "../models/Car.service";
+import { FavoriteService } from "../models/Favorite.service";
 import { AppError, HttpCode, requestLanguage } from "../libs/utils/Errors";
 import type { CarInput } from "../libs/types/car";
 
@@ -130,6 +131,55 @@ export class CarController {
       if (!memberId) throw new AppError("UNAUTHORIZED", HttpCode.UNAUTHORIZED);
       await CarService.deleteOwn(request.params.id, memberId);
       response.status(HttpCode.OK).json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async toggleFavorite(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      requestLanguage(request);
+      const memberId = (request as Request & { memberId?: string }).memberId;
+      if (!memberId) throw new AppError("UNAUTHORIZED", HttpCode.UNAUTHORIZED);
+      const { id: carId } = request.params;
+      const result = await FavoriteService.toggle(memberId, carId);
+      response.status(HttpCode.OK).json({ success: true, data: result });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async myFavorites(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      requestLanguage(request);
+      const memberId = (request as Request & { memberId?: string }).memberId;
+      if (!memberId) throw new AppError("UNAUTHORIZED", HttpCode.UNAUTHORIZED);
+      const cars = await FavoriteService.listByMember(memberId);
+      response.status(HttpCode.OK).json({ success: true, data: cars });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async myFavoriteIds(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      requestLanguage(request);
+      const memberId = (request as Request & { memberId?: string }).memberId;
+      if (!memberId) throw new AppError("UNAUTHORIZED", HttpCode.UNAUTHORIZED);
+      const ids = await FavoriteService.getFavoriteCarIds(memberId);
+      response.status(HttpCode.OK).json({ success: true, data: ids });
     } catch (error) {
       next(error);
     }

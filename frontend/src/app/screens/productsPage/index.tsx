@@ -8,6 +8,7 @@ export default function ProductsPage() {
   const carsState = useCars();
   const navigate = useNavigate();
   const { t } = useLocale();
+
   return (
     <Container
       maxWidth="lg"
@@ -26,13 +27,15 @@ export default function ProductsPage() {
       <CatalogSection
         cars={carsState.cars}
         total={carsState.total}
+        page={carsState.page}
+        totalPages={carsState.totalPages}
+        pageSize={carsState.pageSize}
         loading={carsState.loading}
         error={carsState.error}
-        hasMore={carsState.cars.length < carsState.total}
         sort={carsState.sort}
         onSortChange={carsState.setSort}
-        onLoadMore={() => void carsState.loadCars(carsState.page + 1, true)}
-        onRetry={() => void carsState.loadCars()}
+        onPageChange={carsState.setPage}
+        onRetry={() => void carsState.loadCars(carsState.page)}
         onOpenCar={(car) => navigate(`/cars/${car._id}`)}
       />
     </Container>

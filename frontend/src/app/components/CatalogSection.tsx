@@ -1,10 +1,11 @@
-import { ArrowDownward, ArrowForward, Search } from "@mui/icons-material";
+import { ArrowForward, Search } from "@mui/icons-material";
 import {
   Alert,
   Box,
   Button,
   FormControl,
   MenuItem,
+  Pagination,
   Paper,
   Select,
   Skeleton,
@@ -19,12 +20,14 @@ import CarCard from "./CarCard";
 type Props = {
   cars: Car[];
   total: number;
+  page: number;
+  totalPages: number;
+  pageSize?: number;
   loading: boolean;
   error: string;
-  hasMore: boolean;
   sort: string;
   onSortChange: (value: string) => void;
-  onLoadMore: () => void;
+  onPageChange: (page: number) => void;
   onRetry: () => void;
   onOpenCar: (car: Car) => void;
 };
@@ -33,16 +36,19 @@ export default function CatalogSection(props: Props) {
   const {
     cars,
     total,
+    page,
+    totalPages,
+    pageSize = 9,
     loading,
     error,
-    hasMore,
     sort,
     onSortChange,
-    onLoadMore,
+    onPageChange,
     onRetry,
     onOpenCar,
   } = props;
   const { t } = useLocale();
+
   return (
     <Box component="section" className="catalog section-wrap" id="catalog">
       <Box className="section-heading">
@@ -67,6 +73,7 @@ export default function CatalogSection(props: Props) {
           {t("allListings")}
         </Button>
       </Box>
+
       <Paper className="catalog-toolbar" elevation={0}>
         <Box className="result-count">
           <span className="live-dot" />{" "}
@@ -99,6 +106,7 @@ export default function CatalogSection(props: Props) {
           </Stack>
         </Stack>
       </Paper>
+
       {error && (
         <Alert
           severity="error"
@@ -112,9 +120,10 @@ export default function CatalogSection(props: Props) {
           {error}
         </Alert>
       )}
+
       {loading && cars.length === 0 && (
         <Box className="loading-grid">
-          {Array.from({ length: 4 }, (_, index) => (
+          {Array.from({ length: 6 }, (_, index) => (
             <Paper className="skeleton-card" key={index} elevation={0}>
               <Skeleton variant="rectangular" height={181} />
               <Skeleton width="60%" sx={{ m: 1.5 }} />
@@ -123,6 +132,7 @@ export default function CatalogSection(props: Props) {
           ))}
         </Box>
       )}
+
       {!loading && !error && cars.length === 0 && (
         <Stack className="state-message empty-state" alignItems="center">
           <Search />
@@ -132,6 +142,7 @@ export default function CatalogSection(props: Props) {
           <Typography color="text.secondary">{t("emptyCarsBody")}</Typography>
         </Stack>
       )}
+
       {cars.length > 0 && (
         <Box className="car-grid">
           {cars.map((car, index) => (
@@ -139,19 +150,31 @@ export default function CatalogSection(props: Props) {
           ))}
         </Box>
       )}
-      {hasMore && (
-        <Stack className="load-more-wrap" alignItems="center">
-          <Button
-            variant="outlined"
-            className="load-more"
+
+      {totalPages > 1 && (
+        <Stack
+          direction="column"
+          alignItems="center"
+          spacing={1.5}
+          sx={{ mt: 5, mb: 2 }}
+        >
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(_, newPage) => {
+              onPageChange(newPage);
+              const element = document.getElementById("catalog");
+              if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            color="primary"
+            size="large"
+            shape="rounded"
             disabled={loading}
-            onClick={onLoadMore}
-            endIcon={<ArrowDownward />}
-          >
-            {loading ? t("loading") : t("loadMore")}
-          </Button>
+          />
           <Typography variant="caption" color="text.secondary">
-            {cars.length} / {total} {t("shown")}
+            {total} {t("found")} · {page} / {totalPages}
           </Typography>
         </Stack>
       )}

@@ -3,6 +3,7 @@ import { CarStatus } from "../libs/enums/car.enum";
 import CarModel from "../schema/Car.model";
 import type { CarInput } from "../libs/types/car";
 import { AppError, HttpCode } from "../libs/utils/Errors";
+import { FavoriteService } from "./Favorite.service";
 
 export class CarService {
   static async create(
@@ -129,6 +130,7 @@ export class CarService {
       if (!mongoose.isValidObjectId(id)) throw new AppError("NOT_FOUND", HttpCode.NOT_FOUND);
       const result = await CarModel.deleteOne({ _id: id, sellerId });
       if (!result.deletedCount) throw new AppError("NOT_FOUND", HttpCode.NOT_FOUND);
+      void FavoriteService.deleteForCar(id);
     } catch (error) {
       if (error instanceof AppError) throw error;
       throw new AppError("INTERNAL", HttpCode.INTERNAL_SERVER_ERROR);
@@ -203,6 +205,7 @@ export class CarService {
       if (!mongoose.isValidObjectId(id)) throw new AppError("NOT_FOUND", HttpCode.NOT_FOUND);
       const result = await CarModel.deleteOne({ _id: id });
       if (!result.deletedCount) throw new AppError("NOT_FOUND", HttpCode.NOT_FOUND);
+      void FavoriteService.deleteForCar(id);
     } catch (error) {
       if (error instanceof AppError) throw error;
       throw new AppError("INTERNAL", HttpCode.INTERNAL_SERVER_ERROR);

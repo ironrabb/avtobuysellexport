@@ -4,6 +4,8 @@ import type { Car } from "../../types";
 
 type CarResult = { items: Car[]; total: number };
 
+export const PAGE_SIZE = 9;
+
 export function useCars() {
   const [cars, setCars] = useState<Car[]>([]);
   const [total, setTotal] = useState(0);
@@ -17,12 +19,12 @@ export function useCars() {
   const [sort, setSort] = useState("newest");
 
   const loadCars = useCallback(
-    async (nextPage = 1, append = false) => {
+    async (nextPage = 1) => {
       setLoading(true);
       setError("");
       const params = new URLSearchParams({
         page: String(nextPage),
-        limit: "12",
+        limit: String(PAGE_SIZE),
         sort,
       });
       if (query.trim()) params.set("q", query.trim());
@@ -31,10 +33,8 @@ export function useCars() {
       if (fuel) params.set("fuel", fuel);
       try {
         const result = await api<CarResult>(`/api/cars?${params}`);
-        setCars((current) =>
-          append ? [...current, ...result.items] : result.items,
-        );
-        setTotal(result.total);
+        setCars(result.items ?? []);
+        setTotal(result.total ?? 0);
         setPage(nextPage);
       } catch (cause) {
         setError(
@@ -50,9 +50,13 @@ export function useCars() {
   );
 
   useEffect(() => {
-    const timer = window.setTimeout(() => void loadCars(), 220);
+    const timer = window.setTimeout(() => void loadCars(1), 220);
     return () => window.clearTimeout(timer);
   }, [loadCars]);
+
+  const changePage = (newPage: number) => {
+    void loadCars(newPage);
+  };
 
   const resetFilters = () => {
     setQuery("");
@@ -60,10 +64,15 @@ export function useCars() {
     setRegion("");
     setFuel("");
   };
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
   return {
     cars,
     total,
     page,
+    pageSize: PAGE_SIZE,
+    totalPages,
     loading,
     error,
     query,
@@ -76,6 +85,7 @@ export function useCars() {
     setRegion,
     setFuel,
     setSort,
+    setPage: changePage,
     resetFilters,
     loadCars,
   };

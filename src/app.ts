@@ -44,6 +44,10 @@ app.use(cookieParser());
 /** 3. MIDDLEWARE: static fayllar, API rate limit va health endpoint */
 app.use("/public", express.static(path.resolve(process.cwd(), "src/public")));
 app.use(
+  "/images",
+  express.static(path.resolve(process.cwd(), "src/public/images")),
+);
+app.use(
   "/api",
   rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -75,12 +79,15 @@ if (fs.existsSync(frontendBuild)) {
         request.path === routePrefix ||
         request.path.startsWith(`${routePrefix}/`),
     );
-    if (isBackendPath) return next(new AppError("NOT_FOUND", HttpCode.NOT_FOUND));
+    if (isBackendPath)
+      return next(new AppError("NOT_FOUND", HttpCode.NOT_FOUND));
     response.sendFile(path.join(frontendBuild, "index.html"));
   });
 }
 
-app.use((_request, _response, next) => next(new AppError("NOT_FOUND", HttpCode.NOT_FOUND)));
+app.use((_request, _response, next) =>
+  next(new AppError("NOT_FOUND", HttpCode.NOT_FOUND)),
+);
 app.use(errorHandler);
 
 export default app;
